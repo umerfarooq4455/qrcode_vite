@@ -1,0 +1,13 @@
+<svg width="48" height="50" viewBox="0 0 48 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect y="50" width="16" height="7" rx="3.5" transform="rotate(-90 0 50)" fill="black"/>
+<rect x="33" y="16" width="16" height="7" rx="3.5" transform="rotate(-90 33 16)" fill="black"/>
+<rect x="8" y="40" width="24" height="8" rx="4" transform="rotate(-90 8 40)" fill="black"/>
+<rect x="33" y="43" width="26" height="7" rx="3.5" transform="rotate(-90 33 43)" fill="black"/>
+<rect x="41" y="50" width="27" height="7" rx="3.5" transform="rotate(-90 41 50)" fill="black"/>
+<rect x="17" y="40" width="33" height="7" rx="3.5" transform="rotate(-90 17 40)" fill="black"/>
+<path d="M3.5 16C1.567 16 1.86863e-08 14.433 4.17371e-08 12.5L1.90798e-07 0L7 8.34742e-08L7 12.5C7 14.433 5.433 16 3.5 16Z" fill="black"/>
+<path d="M44.5 7C42.567 7 41 5.433 41 3.5L41 0L48 8.34742e-08L48 3.5C48 5.433 46.433 7 44.5 7Z" fill="black"/>
+<path d="M28.5 34C30.433 34 32 35.567 32 37.5L32 50L25 50L25 37.5C25 35.567 26.567 34 28.5 34Z" fill="black"/>
+<path d="M3.5 25C1.567 25 1.86863e-08 23.433 4.17371e-08 21.5C6.47878e-08 19.567 1.567 18 3.5 18C5.433 18 7 19.567 7 21.5C7 23.433 5.433 25 3.5 25Z" fill="black"/>
+<path d="M28.5 15C26.567 15 25 13.433 25 11.5L25 10.5C25 8.567 26.567 7 28.5 7C30.433 7 32 8.567 32 10.5L32 11.5C32 13.433 30.433 15 28.5 15Z" fill="black"/>
+</svg>
