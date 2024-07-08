@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 
-interface FontOption {
-  name: string;
-  value: string;
-}
-
 const Fonts: React.FC = () => {
-  const [activeIndex, setActiveIndex] = (useState < any) | (null > 1);
+  const [activeIndex, setActiveIndex] = useState<number | null>(1);
 
-  const fontOptions: FontOption[] = [
+  const fontOptions = [
     { name: "Lato", value: "Lato" },
     { name: "Open Sans", value: "Open Sans" },
     { name: "Roboto", value: "Roboto" },
@@ -53,10 +48,10 @@ const Fonts: React.FC = () => {
     <div className="space-y-2">
       <div className="rounded-[10px] border-[1px] border-gray-300 bg-white px-5 font-dm text-[16px] font-semibold shadow-sm shadow-[#003EFF1A] dark:border-[#191A1F] dark:bg-[#13151E] dark:text-[#fff]">
         <div
-          className="flex h-[45px] cursor-pointer items-center justify-between "
+          className="flex h-[45px] cursor-pointer items-center justify-between"
           onClick={() => toggleAccordion(1)}
         >
-          <span className="text-[16px] font-semibold  text-[#1B254B] dark:text-[#fff] ">
+          <span className="text-[16px] font-semibold text-[#1B254B] dark:text-[#fff]">
             Fonts
           </span>
           <svg
@@ -90,7 +85,7 @@ const Fonts: React.FC = () => {
                 </label>
                 <select
                   id="countries1"
-                  className="block w-full resize-none rounded-[10px] border border-gray-300 bg-white p-2.5 text-[16px] font-normal  text-[#1B254B]  dark:border-[#191A1F] dark:bg-[#212430] dark:text-white dark:placeholder-[#fff]"
+                  className="block w-full resize-none rounded-[10px] border border-gray-300 bg-white p-2.5 text-[16px] font-normal text-[#1B254B] dark:border-[#191A1F] dark:bg-[#212430] dark:text-white dark:placeholder-[#fff]"
                 >
                   {fontOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -108,7 +103,7 @@ const Fonts: React.FC = () => {
                 </label>
                 <select
                   id="countries2"
-                  className="block w-full resize-none rounded-[10px] border border-gray-300 bg-white p-2.5 text-[16px] font-normal  text-[#1B254B]  dark:border-[#191A1F] dark:bg-[#212430] dark:text-white dark:placeholder-[#fff]"
+                  className="block w-full resize-none rounded-[10px] border border-gray-300 bg-white p-2.5 text-[16px] font-normal text-[#1B254B] dark:border-[#191A1F] dark:bg-[#212430] dark:text-white dark:placeholder-[#fff]"
                 >
                   {fontOptions.map((option) => (
                     <option key={option.value} value={option.value}>

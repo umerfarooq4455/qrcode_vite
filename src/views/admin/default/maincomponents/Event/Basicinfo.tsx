@@ -2,18 +2,27 @@ import React, { useState } from "react";
 import defultpdfimg from "../../../../../assets/img/qrcold-icons/pdfimges/Group 191.svg";
 import plusebutton from "../../../../../assets/img/qrcold-icons/pdfimges/material-symbols_add (1).svg";
 import editbutton from "../../../../../assets/img/qrcold-icons/pdfimges/material-symbols_add.svg";
+import { RxCross1 } from "react-icons/rx";
 
-const Playlistinfo: React.FC = () => {
+interface InputField {
+  name: string;
+  url: string;
+}
+
+const Basicinfo: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(1);
-  const [setSelectedFile] = useState<string>(defultpdfimg);
-  const [selectedCoverFile, setSelectedCoverFile] =
-    useState<string>(defultpdfimg);
-  const [isImageSelected] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<string>(defultpdfimg);
+  const [selectedCoverFile, setSelectedCoverFile] = useState<string>(defultpdfimg);
+  const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
+  const [inputs, setInputs] = useState<InputField[]>([]);
+  const [buttonVisible, setButtonVisible] = useState<boolean>(true);
 
-  const handleFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    fileType: "cover" | "logo"
-  ) => {
+  const addInputFieldPair = () => {
+    setInputs([...inputs, { name: "", url: "" }]);
+    setButtonVisible(false); // Hide the button after it is clicked
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, fileType: string) => {
     const file = event.target.files?.[0];
 
     if (file) {
@@ -34,11 +43,19 @@ const Playlistinfo: React.FC = () => {
     setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
-  const handelDeleteimg = (fileType: "cover" | "logo") => {
+  const handelDeleteimg = (fileType: string) => {
     if (fileType === "cover") {
       setSelectedCoverFile(defultpdfimg);
     } else if (fileType === "logo") {
       setSelectedFile(defultpdfimg);
+    }
+  };
+
+  const handleDeleteInput = (index: number) => {
+    const newInputs = inputs.filter((_, i) => i !== index);
+    setInputs(newInputs);
+    if (newInputs.length === 0) {
+      setButtonVisible(true); // Show the button if no inputs are left
     }
   };
 
@@ -73,9 +90,13 @@ const Playlistinfo: React.FC = () => {
 
         {activeIndex === 1 && (
           <div className="mb-1">
-            <div className="mb-2 dark:text-[#fff]">Information</div>
+            <div className="py-3">
+              <span className="flex text-[12px] font-bold text-[#1B254B] dark:text-[#fff]">
+                Event Information
+              </span>
+            </div>
             <div className="flex flex-col sm:flex-row">
-              <label className="text-[#1B254B flex text-[12px] font-semibold">
+              <label className="flex text-[12px] font-semibold text-[#1B254B]  dark:text-[#fff]">
                 Image
               </label>
             </div>
@@ -142,36 +163,80 @@ const Playlistinfo: React.FC = () => {
             <div className="mt-5 flex flex-col">
               <div>
                 <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
-                  Name
+                  Title *
                 </label>
                 <input
                   type="text"
                   id="title"
-                  placeholder="Artist Name"
+                  placeholder="Title"
                   className="h-[45px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-5 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
                 />
               </div>
               <div className="mb-2 mt-2">
                 <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
-                  Title
+                  Description
                 </label>
                 <input
                   type="text"
                   id="description"
                   className="h-[45px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-5 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
-                  placeholder="Tv show"
+                  placeholder="Description"
                 />
               </div>
-              <div className="mb-2 mt-2">
-                <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
-                  Discription
-                </label>
-                <textarea
-                  id="website"
-                  className="h-[145px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-2 py-2 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
-                  placeholder="Add here"
-                />
-              </div>
+
+              {inputs.map((input, index) => (
+                <div
+                  key={index}
+                  className="mb-4 mt-2 flex flex-col md:flex-row md:space-x-4 md:w-2/4"
+                >
+                  <div className="flex w-full flex-col md:w-1/2">
+                    <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
+                      Button
+                    </label>
+                    <input
+                      type="text"
+                      id={`button-name-${index}`}
+                      className="h-[45px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-5 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
+                      placeholder="Confirm assistance"
+                      value={input.name}
+                      onChange={(e) => {
+                        const newInputs = inputs.slice();
+                        newInputs[index].name = e.target.value;
+                        setInputs(newInputs);
+                      }}
+                    />
+                  </div>
+                  <div className="mt-2 flex w-full flex-col md:mt-0 md:w-1/2">
+                    <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
+                      Button URL
+                    </label>
+                    <input
+                      type="url"
+                      id={`button-url-${index}`}
+                      className="h-[45px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-5 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
+                      placeholder="https://qrfy.com/"
+                      value={input.url}
+                      onChange={(e) => {
+                        const newInputs = inputs.slice();
+                        newInputs[index].url = e.target.value;
+                        setInputs(newInputs);
+                      }}
+                    />
+                  </div>
+                  <div className="flex items-center mt-6">
+                    <RxCross1 onClick={() => handleDeleteInput(index)} />
+                  </div>
+                </div>
+              ))}
+              {buttonVisible && (
+                <button
+                  type="button"
+                  onClick={addInputFieldPair}
+                  className="my-3 h-[37px] w-[129px] cursor-pointer rounded-full bg-[#5D5FEF]  text-sm text-white "
+                >
+                  Add Button
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -180,4 +245,4 @@ const Playlistinfo: React.FC = () => {
   );
 };
 
-export default Playlistinfo;
+export default Basicinfo;

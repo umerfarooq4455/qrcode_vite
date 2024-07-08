@@ -5,8 +5,8 @@ interface FontOption {
   value: string;
 }
 
-const Fonts: React.FC = () => {
-  const [activeIndex, setActiveIndex] = (useState < any) | (null > 1);
+const Fontsevnet: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(1);
 
   const fontOptions: FontOption[] = [
     { name: "Lato", value: "Lato" },
@@ -56,7 +56,7 @@ const Fonts: React.FC = () => {
           className="flex h-[45px] cursor-pointer items-center justify-between "
           onClick={() => toggleAccordion(1)}
         >
-          <span className="text-[16px] font-semibold  text-[#1B254B] dark:text-[#fff] ">
+          <span className="text-[16px] font-semibold text-[#1B254B] dark:text-[#fff] ">
             Fonts
           </span>
           <svg
@@ -125,4 +125,4 @@ const Fonts: React.FC = () => {
   );
 };
 
-export default Fonts;
+export default Fontsevnet;

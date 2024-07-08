@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import defultpdfimg from "../../../../../assets/img/qrcold-icons/pdfimges/Group 191.svg";
 import plusebutton from "../../../../../assets/img/qrcold-icons/pdfimges/material-symbols_add (1).svg";
 import editbutton from "../../../../../assets/img/qrcold-icons/pdfimges/material-symbols_add.svg";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import CKEditorInspector from "@ckeditor/ckeditor5-inspector";
 
-const Playlistinfo: React.FC = () => {
+const Landinginfo: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(1);
-  const [setSelectedFile] = useState<string>(defultpdfimg);
-  const [selectedCoverFile, setSelectedCoverFile] =
-    useState<string>(defultpdfimg);
-  const [isImageSelected] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<string>(defultpdfimg);
+  const [selectedCoverFile, setSelectedCoverFile] = useState<string>(defultpdfimg);
+  const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
 
-  const handleFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    fileType: "cover" | "logo"
-  ) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>, fileType: string) => {
     const file = event.target.files?.[0];
 
     if (file) {
@@ -34,7 +33,7 @@ const Playlistinfo: React.FC = () => {
     setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
-  const handelDeleteimg = (fileType: "cover" | "logo") => {
+  const handelDeleteimg = (fileType: string) => {
     if (fileType === "cover") {
       setSelectedCoverFile(defultpdfimg);
     } else if (fileType === "logo") {
@@ -73,7 +72,6 @@ const Playlistinfo: React.FC = () => {
 
         {activeIndex === 1 && (
           <div className="mb-1">
-            <div className="mb-2 dark:text-[#fff]">Information</div>
             <div className="flex flex-col sm:flex-row">
               <label className="text-[#1B254B flex text-[12px] font-semibold">
                 Image
@@ -139,39 +137,31 @@ const Playlistinfo: React.FC = () => {
 
             {/* Cover Image Section */}
 
-            <div className="mt-5 flex flex-col">
+            <div className="mt-5 mb-3 flex flex-col">
               <div>
                 <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
-                  Name
+                  Title *
                 </label>
                 <input
                   type="text"
                   id="title"
-                  placeholder="Artist Name"
+                  placeholder="Title"
                   className="h-[45px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-5 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
                 />
               </div>
-              <div className="mb-2 mt-2">
-                <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  id="description"
-                  className="h-[45px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-5 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
-                  placeholder="Tv show"
-                />
-              </div>
-              <div className="mb-2 mt-2">
-                <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
-                  Discription
-                </label>
-                <textarea
-                  id="website"
-                  className="h-[145px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-2 py-2 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
-                  placeholder="Add here"
-                />
-              </div>
+            </div>
+
+            <div className="mb-5 w-full">
+              <CKEditor
+                editor={ClassicEditor}
+                data="<p></ul>"
+                onReady={(editor) => {
+                  CKEditorInspector.attach(editor);
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                }}
+              />
             </div>
           </div>
         )}
@@ -180,4 +170,4 @@ const Playlistinfo: React.FC = () => {
   );
 };
 
-export default Playlistinfo;
+export default Landinginfo;

@@ -3,17 +3,25 @@ import defultpdfimg from "../../../../../assets/img/qrcold-icons/pdfimges/Group 
 import plusebutton from "../../../../../assets/img/qrcold-icons/pdfimges/material-symbols_add (1).svg";
 import editbutton from "../../../../../assets/img/qrcold-icons/pdfimges/material-symbols_add.svg";
 
-const Playlistinfo: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(1);
-  const [setSelectedFile] = useState<string>(defultpdfimg);
-  const [selectedCoverFile, setSelectedCoverFile] =
-    useState<string>(defultpdfimg);
-  const [isImageSelected] = useState<boolean>(false);
+interface InputField {
+  name: string;
+  url: string;
+}
 
-  const handleFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    fileType: "cover" | "logo"
-  ) => {
+const Businfo: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(1);
+  const [selectedFile, setSelectedFile] = useState<string>(defultpdfimg);
+  const [selectedCoverFile, setSelectedCoverFile] = useState<string>(defultpdfimg);
+  const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
+  const [inputs, setInputs] = useState<InputField[]>([]);
+  const [buttonVisible, setButtonVisible] = useState<boolean>(true);
+
+  const addInputFieldPair = () => {
+    setInputs([...inputs, { name: "", url: "" }]);
+    setButtonVisible(false); // Hide the button after it is clicked
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, fileType: string) => {
     const file = event.target.files?.[0];
 
     if (file) {
@@ -34,7 +42,7 @@ const Playlistinfo: React.FC = () => {
     setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
-  const handelDeleteimg = (fileType: "cover" | "logo") => {
+  const handelDeleteimg = (fileType: string) => {
     if (fileType === "cover") {
       setSelectedCoverFile(defultpdfimg);
     } else if (fileType === "logo") {
@@ -46,10 +54,10 @@ const Playlistinfo: React.FC = () => {
     <div className="space-y-2">
       <div className="rounded-[10px] border-[1px] border-gray-300 bg-white px-5 font-dm text-[14px] font-semibold shadow-sm shadow-[#003EFF1A] dark:border-[#191A1F] dark:bg-[#13151E] dark:text-[#fff]">
         <div
-          className="flex h-[45px] cursor-pointer items-center justify-between "
+          className="flex h-[45px] cursor-pointer items-center justify-between"
           onClick={() => toggleAccordion(1)}
         >
-          <span className="text-[16px] font-semibold  text-[#1B254B] dark:text-[#fff] ">
+          <span className="text-[16px] font-semibold text-[#1B254B] dark:text-[#fff]">
             Basic Information
           </span>
           <svg
@@ -73,15 +81,14 @@ const Playlistinfo: React.FC = () => {
 
         {activeIndex === 1 && (
           <div className="mb-1">
-            <div className="mb-2 dark:text-[#fff]">Information</div>
             <div className="flex flex-col sm:flex-row">
-              <label className="text-[#1B254B flex text-[12px] font-semibold">
+              <label className="text-[#1B254B] flex text-[12px] font-semibold">
                 Image
               </label>
             </div>
 
             {/* Cover Image Section */}
-            <div className="mt-4 flex ">
+            <div className="mt-4 flex">
               <div className="relative flex pb-5">
                 <div className="relative">
                   <label htmlFor="coverFileInput">
@@ -125,7 +132,7 @@ const Playlistinfo: React.FC = () => {
                   <>
                     <button
                       type="button"
-                      className="cursor-pointer rounded-3xl border border-[#5D5FEF] p-3 px-7 text-sm  font-semibold text-[#5D5FEF] dark:border-[#fff] dark:text-[#fff]"
+                      className="cursor-pointer rounded-3xl border border-[#5D5FEF] p-3 px-7 text-sm font-semibold text-[#5D5FEF] dark:border-[#fff] dark:text-[#fff]"
                       onClick={() => handelDeleteimg("cover")}
                     >
                       Delete
@@ -142,36 +149,87 @@ const Playlistinfo: React.FC = () => {
             <div className="mt-5 flex flex-col">
               <div>
                 <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
-                  Name
+                  Title *
                 </label>
                 <input
                   type="text"
                   id="title"
-                  placeholder="Artist Name"
+                  placeholder="Title"
                   className="h-[45px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-5 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
                 />
               </div>
               <div className="mb-2 mt-2">
                 <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
-                  Title
+                  Description
                 </label>
                 <input
                   type="text"
                   id="description"
                   className="h-[45px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-5 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
-                  placeholder="Tv show"
+                  placeholder="Description"
                 />
               </div>
               <div className="mb-2 mt-2">
                 <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
-                  Discription
+                  Website
                 </label>
-                <textarea
+                <input
+                  type="url"
                   id="website"
-                  className="h-[145px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-2 py-2 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
-                  placeholder="Add here"
+                  className="h-[45px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-5 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
+                  placeholder="http://.."
                 />
               </div>
+              {inputs.map((input, index) => (
+                <div
+                  key={index}
+                  className="mb-4 mt-2 flex flex-col md:flex-row md:space-x-4"
+                >
+                  <div className="flex w-full flex-col md:w-1/2">
+                    <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
+                      Button Name
+                    </label>
+                    <input
+                      type="text"
+                      id={`button-name-${index}`}
+                      className="h-[45px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-5 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
+                      placeholder="Button Name"
+                      value={input.name}
+                      onChange={(e) => {
+                        const newInputs = [...inputs];
+                        newInputs[index].name = e.target.value;
+                        setInputs(newInputs);
+                      }}
+                    />
+                  </div>
+                  <div className="mt-2 flex w-full flex-col md:mt-0 md:w-1/2">
+                    <label className="mb-2 block text-[12px] font-semibold text-gray-900 dark:text-white">
+                      Button URL
+                    </label>
+                    <input
+                      type="url"
+                      id={`button-url-${index}`}
+                      className="h-[45px] w-full rounded-[10px] border-[1px] border-[#73779166] bg-[#fff] px-5 text-sm text-gray-900 dark:border-[#191A1F] dark:bg-[#212430] dark:text-[#fff] dark:placeholder-[#fff]"
+                      placeholder="http://.."
+                      value={input.url}
+                      onChange={(e) => {
+                        const newInputs = [...inputs];
+                        newInputs[index].url = e.target.value;
+                        setInputs(newInputs);
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+              {buttonVisible && (
+                <button
+                  type="button"
+                  onClick={addInputFieldPair}
+                  className="my-3 h-[37px] w-[129px] cursor-pointer rounded-full bg-[#5D5FEF] text-sm text-white"
+                >
+                  Add Button
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -180,4 +238,4 @@ const Playlistinfo: React.FC = () => {
   );
 };
 
-export default Playlistinfo;
+export default Businfo;
